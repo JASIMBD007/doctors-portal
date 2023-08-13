@@ -1,13 +1,14 @@
 import { format } from 'date-fns';
 import React from 'react'
 
-const BookingModal = ({ treatment, date }) => {
+const BookingModal = ({ treatment, setTreatment, date }) => {
     const { _id, name, slots } = treatment;
 
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
         console.log(_id, name, slot);
+        setTreatment(null);
     }
     return (
         <div>
@@ -24,7 +25,7 @@ const BookingModal = ({ treatment, date }) => {
                         <input disabled type="text" value={format(date, 'PP')} className="input input-bordered w-full max-w-xs" />
                         <select name="slot" className="select select-bordered w-full max-w-xs">
                             {
-                                slots.map(slot => <option value={slot}>{slot}
+                                slots.map(slot => <option key={option._id} value={slot}>{slot}
                                 </option>)
                             }
                         </select>
