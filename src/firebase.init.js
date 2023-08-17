@@ -1,17 +1,22 @@
 // Import the functions you need from the SDKs you need
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAQHf3UuNfEWGBEpLvQTCn1JgkgfEqzn00",
-    authDomain: "doctors-portal-36f6f.firebaseapp.com",
-    projectId: "doctors-portal-36f6f",
-    storageBucket: "doctors-portal-36f6f.appspot.com",
-    messagingSenderId: "236136647800",
-    appId: "1:236136647800:web:0a55bee3cc80456bdab18d"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+export default auth;
