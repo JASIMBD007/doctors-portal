@@ -6,6 +6,7 @@ import About from './Pages/About/About'
 import Login from './Pages/Login/Login'
 import Appointment from './Pages/Appointment/Appointment'
 import SignUp from './Pages/Login/SignUp'
+import ProtectedRoute from './Pages/Login/ProtectedRoute'
 
 function App () {
 
@@ -16,7 +17,9 @@ function App () {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/appointment" element={<Appointment />} />
+        <Route path="/appointment" element={<ProtectedRoute>
+          <Appointment />
+        </ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
