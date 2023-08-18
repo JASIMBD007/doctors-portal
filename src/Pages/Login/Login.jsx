@@ -1,18 +1,37 @@
 import React from 'react'
 import auth from '../../firebase.init';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
+import Loading from '../Shared/Loading';
 
 const Login = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit, } = useForm();
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
 
-    if (user) {
-        console.log(user);
+    let signInError;
+
+    if (loading || gLoading) {
+        return <Loading />
+            ;
     }
 
-    const onSubmit = (data) => console.log(data)
+    if (error || gError) {
+        signInError = <p className=' text-red-600 '>{error?.message || gError?.message}</p>
+    }
+    if (gUser) {
+        console.log(gUser);
+    }
 
+    const onSubmit = (data) => {
+        console.log(data);
+        signInWithEmailAndPassword(data.email, data.password);
+    }
     return (
         <div className='flex justify-center items-center h-screen'>
             <div className="card w-96 bg-base-100 shadow-xl">
@@ -76,6 +95,7 @@ const Login = () => {
                                 }
                             </label>
                         </div>
+                        {signInError}
                         <input className='btn w-full max-w-xs' type="submit" value="Login" />
                     </form>
                     <div className="divider">OR</div>
