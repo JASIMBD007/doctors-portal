@@ -33,16 +33,18 @@ const Login = () => {
                                     },
                                     pattern: {
                                         value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                        message: 'Provide a valid Email' // JS only: <p>error message</p> TS only support string
+                                        message: 'Provide a valid Email'
                                     }
                                 })}
 
                             />
                             <label className="label">
-                                {errors.email?.type === "required" && (
-                                    <p role="alert">{errors.email.message}</p>
-                                )}
-                                <span className="label-text-alt">Bottom Left label</span>
+                                {errors.email?.type === "required" &&
+                                    <span className='label-text-alt text-red-600'>{errors.email.message}</span>
+                                }
+                                {errors.email?.type === "pattern" &&
+                                    <span className='label-text-alt text-red-600'>{errors.email.message}</span>
+                                }
                             </label>
                         </div>
                         <div className="form-control w-full max-w-xs">
@@ -52,40 +54,29 @@ const Login = () => {
                             <input
                                 type="password"
                                 placeholder="Password"
-                                className="input input-bordered w-full max-w-xs" {...register("email", {
+                                className="input input-bordered w-full max-w-xs" {...register("password", {
                                     required: {
                                         value: true,
-                                        message: 'Email is Required'
+                                        message: 'Password is Required'
                                     },
-                                    pattern: {
-                                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                        message: 'Provide a valid Email' // JS only: <p>error message</p> TS only support string
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Password must be 6 characters or longer' // JS only: <p>error message</p> TS only support string
                                     }
+
                                 })}
 
                             />
                             <label className="label">
-                                {errors.email?.type === "required" && (
-                                    <p role="alert">{errors.email.message}</p>
-                                )}
-                                <span className="label-text-alt">Bottom Left label</span>
+                                {errors.password?.type === "required" &&
+                                    <span className='label-text-alt text-red-600'>{errors.password.message}</span>
+                                }
+                                {errors.password?.type === "minLength" &&
+                                    <span className='label-text-alt text-red-600'>{errors.password.message}</span>
+                                }
                             </label>
                         </div>
-                        <input
-
-                            aria-invalid={errors.firstName ? "true" : "false"}
-                        />
-                        {errors.firstName?.type === "required" && (
-                            <p role="alert">First name is required</p>
-                        )}
-
-                        <input
-                            {...register("mail", { required: "Email Address is required" })}
-                            aria-invalid={errors.mail ? "true" : "false"}
-                        />
-                        {errors.mail && <p role="alert">{errors.mail.message}</p>}
-
-                        <input type="submit" />
+                        <input className='btn w-full max-w-xs' type="submit" value="Login" />
                     </form>
                     <div className="divider">OR</div>
                     <button onClick={() => signInWithGoogle()} className="btn btn-outline">CONTINUE WITH GOOGLE</button>
