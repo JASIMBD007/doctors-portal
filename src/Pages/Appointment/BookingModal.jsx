@@ -5,7 +5,7 @@ import { data } from 'autoprefixer';
 import { toast } from 'react-toastify';
 
 
-const BookingModal = ({ treatment, setTreatment, date }) => {
+const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
     const { _id, name, slots } = treatment;
     const [user, loading, error] = useAuthState(auth);
     const formatedDate = format(date, 'PP');
@@ -32,14 +32,14 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                if (data.succsess) {
-                    toast(`Appointment is set,${formatedDate} at ${slot}`)
+                if (data.success) {
+                    toast(`Appointment is set, ${formatedDate} at ${slot}`)
                 }
                 else {
                     toast.error(`You already have an Appointment on ${data.booking?.date} at ${data.booking.slot}`)
                 }
                 //to close the modal
+                refetch();
                 setTreatment(null);
             })
 
